@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+	<title>Addition</title>
+</head>
+<body>
+	<div id="app"></div>
+
+	<script type="text/babel">
+		function App() {
+            const [state, setState] = React.useState({
+	            num1: 1,
+	            num2: 2,
+	            response: "",
+	            score: 0
+            })
+
+			function updateResponse(event) {
+                setState({
+	                ...state,
+                    response: event.target.value
+                });
+            }
+
+            function keyPress(event) {
+                if (event.key === "Enter") {
+                    const result = parseInt(state.response);
+                    if (state.num1 + state.num2 === result) {
+                        console.log("==== Correct! ====");
+	                    setState({
+		                    ...state,
+		                    score: state.score + 1
+	                    })
+                    } else {
+                        console.log("==== Wrong! ====");
+                        setState({
+                            ...state,
+                            score: state.score - 1
+                        })
+                    }
+                }
+            }
+
+            return (
+                <div>
+                    <div>{state.num1} + {state.num2}</div>
+                    <input onKeyPress={keyPress} onChange={updateResponse} value={state.response}/>
+	                <div>Score: {state.score}</div>
+                </div>
+            )
+		}
+
+        ReactDOM.render(<App />, document.querySelector('#app'));
+	</script>
+</body>
+</html>
